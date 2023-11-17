@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js 小練習</title>
+</head>
+<body>
+    <!-- 容器 -->
+    <div id="container"></div>
+
+<!-- 引入react核心庫 -->
+<script type="text/javascript" src="../js/react.development.js"></script>
+<!-- 引入react.dom 用予讓react能夠操作dom -->
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<!-- 引入babel 用予將jsx轉換為js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+
+    /*
+        常用語彙：
+            Statement 陳述式。
+            Expression 表達式、運算式。
+
+        區分：[js表達式] 與 [js陳述式]
+            1. 表達式：會回傳結果，一個表達式會產生一個值，可以放在任何一個需要值的地方。
+                以下為表達式範例：
+                    (1). a
+                    (2). a+b
+                    (3). demo(1)
+                    (4). arr.map()
+                    (5). function test () {}
+            2. 陳述式：不會回傳結果。
+                以下為描述句範例：
+                    (1). if(){}
+                    (2). for(){}
+                    (3). switch(){case:xxxx}
+    */
+
+    // 模擬資料
+    const data = ['Angular', 'React', 'Vue'];
+
+    // 創建虛擬DOM
+    const VDOM = (
+        <div>
+            <h1>前端js框架列表</h1>
+            <ul>
+                {
+                    data.map((item, index)=>{
+                        return <li key={index}>{item}</li>
+                    })
+                }
+            </ul>
+        </div>
+    )
+    // 渲染虛擬DOM到畫面，ReactDOM.render(虛擬DOM, 容器)。
+    ReactDOM.render(VDOM, document.getElementById("container"));
+
+</script>
+</body>
+</html>

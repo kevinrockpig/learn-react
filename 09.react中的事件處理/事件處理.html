@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>callback形式的ref</title>
+</head>
+<body>
+    <!-- 容器 -->
+    <div id="container"></div>
+
+<!-- 引入react核心庫 -->
+<script type="text/javascript" src="../js/react.development.js"></script>
+<!-- 引入react.dom 用予讓react能夠操作dom -->
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<!-- 引入babel 用予將jsx轉換為js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+    // 創建組件
+    class Demo extends React.Component{
+
+        /*
+          (1). 通過onXxx屬性指定事件處理函數(注意大小寫)
+               a. React使用的是自定義(合成)事件，而不是使用的原生DOM事件 - 為了更好的相容性
+               b. React中的事件是通過事件委託方式處理(委託給組件最外層的容器) - 為了高效率
+          (2). 通過event.tartget得到發生事件的DOM元素對象 － 不要過度使用ref
+        */
+
+        // 創建ref容器
+        myRef = React.createRef();
+        myRef2 = React.createRef();
+
+        // 顯示左側輸入框數據
+        showLeftData = (event)=>{
+            console.log(event.target);
+            alert(this.myRef.current.value);
+        }
+        // 顯示右側側輸入框數據
+        showRightData = (event)=>{
+            alert(event.target.value);
+        }
+
+        render(){
+            return(
+                <div>
+                    <input ref={this.myRef} type="text" placeholder="點擊按鈕顯示數據"/>&nbsp;
+                    <button onClick={this.showLeftData} >點我顯示左側的數據</button>&nbsp;
+                    <input onBlur={this.showRightData} type="text" placeholder="失去焦點顯示數據"/>
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<Demo/>, document.getElementById('container'));
+
+</script>
+</body>
+</html>

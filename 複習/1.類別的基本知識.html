@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>類別的基本知識</title>
+</head>
+<body>
+    <!-- 容器 -->
+    <div id="container">
+        <h1>basic class knowledge</h1>
+    </div>
+
+<!-- 引入react核心庫 -->
+<script type="text/javascript" src="../js/react.development.js"></script>
+<!-- 引入react.dom 用予讓react能夠操作dom -->
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<!-- 引入babel 用予將jsx轉換為js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/javascript">
+    /*
+        總結：
+            1. 類別中的建構子不是必須寫的，要對實體做一些初始化的操作，如添加指定屬性時才寫。
+            2. 如果A類別繼承了B類別，且A類別中寫了建構子，那麼A類別建構子中的super()是必須要使用的。
+            3. 類別中所定義的方法，都是放在類別的原型物件上，供實體去使用。
+    */
+
+    // 創建一個Person類別
+    class Person {
+        constructor(name, age){
+            // 建構子中的this是誰? － 類別的實體對象。
+            this.name = name;
+            this.age = age;
+        }
+        speak() {
+            // speak方法放在哪裡? － 類別的原型對象上，供實體使用。
+            // 通過Person實體觸發speak時，speak中的this就是Person實體。
+            console.log(`${this.name}. ${this.age}`);
+        }
+    }
+    // 創建一個Student類別，繼承予Person類別。
+    class Student extends Person{
+        constructor(name, age, grade){
+            super(name, age);
+            this.grade = grade;
+        }
+        // 重寫從父類別過來的方法。
+        speak(){
+            console.log(`${this.name}. ${this.age}. ${this.grade}`);
+        }
+        // study方法放在哪裡? － 類別的原型對象上，供實體對象使用。
+        // 通過Student實體觸發study時，study中的this就是Student實體。
+        study(){
+            console.log('努力學習中～');
+        }
+    }
+
+    class Car {
+        constructor(name, price){
+            this.name = name;
+            this.price = price;
+        }
+        // 類別中可以直接寫賦值語句，如下程式的含義是，給Car的實體物件添加一個屬性，名為wheel，值為4。
+        wheel = 4;
+    }
+
+    const c1 = new Car('BenzCla250', 280);
+    const c2 = new Car('toyotaYaris', 50);
+
+    console.log(c1);
+    console.log(c1);
+
+</script>
+</body>
+</html>

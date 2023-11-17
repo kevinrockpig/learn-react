@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>組件實體三大屬性1_2.state的簡寫方式</title>
+</head>
+<body>
+    <!-- 容器 -->
+    <div id="container1"></div>
+    <div id="container2"></div>
+    <div id="container3"></div>
+
+<!-- 引入react核心庫 -->
+<script type="text/javascript" src="../js/react.development.js"></script>
+<!-- 引入react.dom 用予讓react能夠操作dom -->
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<!-- 引入babel 用予將jsx轉換為js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+<!-- 引入prop-types 用予對組件標籤進行限制 -->
+<script type="text/javascript" src="../js/prop-types.js"></script>
+
+<script type="text/babel">
+    // 創建組件
+    class Person extends React.Component{
+
+        constructor(props){
+            // 建構子是否接收props，是否傳遞給props，取決予:是否希望在建構子中通過this訪問props。
+            super(props);
+            console.log('constructor: ',props);
+        }
+
+        // 對標籤屬性進行類型，必要性的限制。
+        static propTypes = {
+            name:PropTypes.string.isRequired,   // 限制name必傳，且為字串。
+            age:PropTypes.number,  // 限制age為數字。
+            sex:PropTypes.string,  // 限制sex為字串。
+            speak:PropTypes.func,  // 限制speak為函式。
+
+        }
+
+        // 預設標籤屬性值
+        static defaultProps = {
+            sex:'男', // 預設sex屬性為男。
+            age:28, // 預設age為28。
+        }
+
+        render(){
+            const {name, sex, age} = this.props;
+            return (
+                <ul>
+                    <li>姓名：{name}</li>
+                    <li>性別：{sex}</li>
+                    <li>年齡：{age+1}</li>    
+                </ul>
+            )
+        }
+    }
+
+    // 渲染組件到頁面
+    ReactDOM.render(<Person name="Linus" speak={speak} />, document.getElementById('container1'));
+    ReactDOM.render(<Person name="Chun" age={26} sex="女"/>, document.getElementById('container2'));
+
+    const p = {name:'Kevin', age:28, sex:'男'};
+
+    // ReactDOM.render(<Person name="Carter" age="36" sex="男"/>, document.getElementById('container3'));
+    ReactDOM.render(<Person {...p}/>, document.getElementById('container3'));
+
+    function speak() {
+        console.log('我在說話～');
+    }
+
+</script>
+</body>
+</html>

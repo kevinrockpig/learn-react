@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>組件實體三大屬性1_2.state的簡寫方式</title>
+</head>
+<body>
+    <!-- 容器 -->
+    <div id="container1"></div>
+    <div id="container2"></div>
+    <div id="container3"></div>
+
+<!-- 引入react核心庫 -->
+<script type="text/javascript" src="../js/react.development.js"></script>
+<!-- 引入react.dom 用予讓react能夠操作dom -->
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<!-- 引入babel 用予將jsx轉換為js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+    // 創建組件
+    class Person extends React.Component{
+        render(){
+            console.log(this);
+            const {name, sex, age} = this.props;
+            return (
+                <ul>
+                    <li>姓名：{name}</li>
+                    <li>性別：{sex}</li>
+                    <li>年齡：{age+1}</li>    
+                </ul>
+            )
+        }
+    }
+
+    // 渲染組件到頁面
+    ReactDOM.render(<Person name="Linus" age={32} sex="男"/>, document.getElementById('container1'));
+    ReactDOM.render(<Person name="Chun" age={26} sex="女"/>, document.getElementById('container2'));
+
+    const p = {name:'Kevin', age:'28', sex:'男'};
+    console.log('@', p);
+
+    // ReactDOM.render(<Person name="Carter" age="36" sex="男"/>, document.getElementById('container3'));
+    ReactDOM.render(<Person {...p}/>, document.getElementById('container3'));
+
+
+</script>
+</body>
+</html>

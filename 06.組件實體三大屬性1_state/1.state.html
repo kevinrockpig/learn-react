@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>組件實體三大屬性1_1.state</title>
+</head>
+<body>
+    <!-- 容器 -->
+    <div id="container"></div>
+
+<!-- 引入react核心庫 -->
+<script type="text/javascript" src="../js/react.development.js"></script>
+<!-- 引入react.dom 用予讓react能夠操作dom -->
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<!-- 引入babel 用予將jsx轉換為js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+    // 1. 創建組件
+    class Weather extends React.Component{
+
+        // 建構子調用幾次? - 1次
+        constructor(props){
+            console.log('觸發constructor');
+            super(props);
+            // 初始狀態
+            this.state = {isHot:false, wind:'微風徐徐'};
+            // 解決changeWeather中this指向問題。
+            this.changeWeather = this.changeWeather.bind(this);
+        }
+
+        // render調用幾次? - 1+n次，1是初始化那次，n是狀態更新的次數。
+        render(){
+            console.log('觸發render')
+            // 讀取狀態
+            const {isHot, wind} = this.state
+            return <h1 onClick={this.changeWeather}>今天天氣很{isHot ? '熱' : '冷'}, {wind}</h1>
+        }
+
+        // changeWeater調用幾次? - 調用幾次就幾次。
+        changeWeather(){
+            console.log('觸發changeWeather');
+            // changeWeather是放在哪裡的? － Weather的原型對象上，供實例實例使用。
+            // 由於changeWeather是作為onClick的回調，所以不是通過實體調用的，是直接調用。
+            // 類別中的方法默認開啟了局部的嚴格模式，所以changeWeather中的this為undefined。
+            
+            // 獲取原來的isHot值
+            const isHot = this.state.isHot;
+            // 重要：狀態必須通過setState進行更新，且更新是一種合併，不是替換。
+            this.setState({isHot:!isHot});
+
+            // 重要：狀態不可直接更改，下面這行就是直接更改！！
+            // this.state.isHot = !isHot;
+        }
+
+    } 
+
+    // 2. 渲染組件到頁面
+    ReactDOM.render(<Weather/>, document.getElementById('container'));
+
+    function demo(){
+        console.log('我被點到了');
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>類別中的方法this指向</title>
+</head>
+<body>
+    <script type="text/javascript">
+
+        class Person {
+            constructor(name, age){
+                this.name = name;
+                this.age = name;
+            }
+            speak(){
+                // speak方法放在哪裡？ - 類別的原型物件上，供實體使用。
+                // 通過Person實體調用speak時，speak中的this就是Person實體。
+                console.log(this);
+            }
+        }
+
+        const p1 = new Person('Linus', 33);
+        console.log(p1)
+        p1.speak() // 通過實體調用speak方法。
+        const x = p1.speak;
+        x();
+
+        function demo1(){
+            'use strict'
+            console.log(this);
+        }
+
+        function demo2(){
+            // 'use strict'
+            console.log(this);
+        }
+
+        demo1(); //undefined
+        demo2();
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.高階函數＿函數柯里化</title>
+</head>
+<body>
+    <!-- 容器 -->
+    <div id="container"></div>
+
+<!-- 引入react核心庫 -->
+<script type="text/javascript" src="../js/react.development.js"></script>
+<!-- 引入react.dom 用予讓react能夠操作dom -->
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<!-- 引入babel 用予將jsx轉換為js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+    //#region
+        /*
+            高階函數: 如果一個函數符合下面兩個規範中的任何一個，那該函數就是高階函數。
+                    1.若A函數，接收的參數是一個函數，那A就可以稱之為高級函數。
+                    2.若A函數，調用的返回值依然是一個函數，那A就可以稱之為高級函數。
+                    常見的高階函數有:Promise、setTimeout、arr.map()...等等。
+
+            函數的柯里化: 通過函數調用繼續返回函數的方式，實現多次接收參數最後統一處理的函數編碼形式。
+         */
+    //#endregion
+
+    // 創建組件
+    class Login extends React.Component {
+        //初始化
+        state = {
+            username:'',    // 用戶名稱
+            password:''     // 密碼
+        }
+
+        // 保存表單數值到狀態中。
+        saveFormDate = (dataType)=>{
+            return (event)=>{
+                this.setState({[dataType]:event.target.value});
+             }
+        }
+
+        handleSubmit = (event)=>{
+            event.preventDefault()  // 阻止表單提交。
+            const {username, password} = this.state;
+            alert(`你輸入的用戶名稱是：${username}, 密碼是：${password}`);
+        }
+
+        render(){
+            return(
+                <form onSubmit={this.handleSubmit}>
+                用戶名稱：  <input onChange={this.saveFormDate('username')} type="text" name="username"/>
+                密碼：  <input onChange={this.saveFormDate('password')} type="password" name="password"/>
+                    <button>登入</button>
+                </form>
+            )
+        }
+    }
+    
+    ReactDOM.render(<Login/>, document.getElementById('container'));
+
+</script>
+</body>
+</html>
